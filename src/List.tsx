@@ -1,5 +1,5 @@
 // Dependencies
-import {FC, useEffect} from 'react';
+import {FC, memo, useEffect} from 'react';
 
 // Components
 import Task from './Task';
@@ -12,12 +12,13 @@ export type Todo = {
 
 interface Props {
     todoList: Todo[];
+    handleDelete: any;
 }
 
-const List: FC<Props> = ({todoList}) => {
+const List: FC<Props> = ({todoList, handleDelete}) => {
     useEffect(() => {
         // This effect is executed every new render
-        console.log('Rendering <List />');
+        // console.log('Rendering <List />');
     });
 
     return (
@@ -25,10 +26,11 @@ const List: FC<Props> = ({todoList}) => {
             {todoList.map((todo: Todo) => (
                 <Task key={todo.id}
                       id={todo.id}
-                      task={todo.task}/>
+                      task={todo.task}
+                      handleDelete={handleDelete}/>
             ))}
         </ul>
     );
 };
 
-export default List;
+export default memo(List);

@@ -12,3 +12,13 @@
 input {
     font-size: 30px
 }
+
+ul {
+    padding: 10px 50px;
+}
+
+li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}

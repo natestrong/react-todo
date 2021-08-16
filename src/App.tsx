@@ -13,10 +13,15 @@ const initialTodos = [
 function App() {
     const [todoList, setTodoList] = useState(initialTodos);
     const [task, setTask] = useState('');
+    const [term, setTerm] = useState('');
 
     useEffect(() => {
         console.log('Rendering <App />');
     });
+
+    const handleSearch = () => {
+        setTerm(task);
+    };
 
     const handleCreate = () => {
         const newTodo = {
@@ -31,6 +36,16 @@ function App() {
         setTask('');
     };
 
+    const filteredTodoList = useMemo(() => todoList.filter((todo: Todo) => {
+        console.log('Filtering...');
+        return todo.task.toLowerCase().includes(term.toLowerCase());
+    }), [term, todoList]);
+
+    const handleDelete = (taskId: number) => {
+        const newTodoList = todoList.filter((todo: Todo) => todo.id !== taskId);
+        setTodoList(newTodoList);
+    };
+
     return (
         <div className='container'>
             <input
@@ -41,8 +56,9 @@ function App() {
             />
 
             <button onClick={handleCreate}>Create</button>
+            <button onClick={handleSearch}>Search</button>
 
-            <List todoList={todoList}/>
+            <List todoList={filteredTodoList} handleDelete={handleDelete}/>
         </div>
     );
 }
